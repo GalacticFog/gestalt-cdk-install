@@ -1,0 +1,51 @@
+# --------------------------------------------------------------------
+# JUJU deployment configuration
+# --------------------------------------------------------------------
+
+# Deployment location
+TARGET_CLOUD=aws
+TARGET_REGION=us-east-1
+
+# Existing controller, or it will be created. Existing controller must exist in
+# the same cloud/region as TARGET_CLOUD and TARGET_REGION
+JUJU_CONTROLLER="my-${TARGET_CLOUD}-${TARGET_REGION}-controller"
+
+# This will be created
+JUJU_MODEL="my-gestalt-cdk-deployment"
+
+# Ceph parameters - Kubernetes exposed PVs
+CEPH_VOLUME_SIZE_MB=1280
+CEPH_NUM_VOLUMES=10
+
+# JUJU bundles, typically no need to change these
+KUBERNETES_BUNDLE=cs:bundle/canonical-kubernetes
+CEPH_MON_BUNDLE=cs:ceph-mon
+CEPH_OSD_BUNDLE=cs:ceph-osd
+
+
+# --------------------------------------------------------------------
+# AWS Specific Configuration, applies only if TARGET_CLOUD = 'aws'
+# --------------------------------------------------------------------
+
+# Route53 DNS Config
+AWS_DNS_DOMAIN="cluster1.example.com"
+AWS_DNS_HOSTED_ZONE_ID="<Enter AWS Hosted Zone ID>"
+
+# Cert corresponding to AWS_DNS_DOMAIN. Obtain the Cert ARN from AWS Certificate Manager.
+AWS_LB_CERT_ARN="<ARN number of SSL certificate>"
+
+# Elastic Load Balancer Settings, must correspond to TARGET_REGION
+AWS_LB_ZONES="us-east-1a us-east-1b us-east-1c us-east-1d us-east-1e"
+
+# Gestalt LB and DNS resource names
+AWS_GESTALT_UI_LB_NAME="gestalt-ui"
+AWS_GESTALT_UI_DNS_NAME="gestalt-ui"
+
+AWS_GESTALT_KONG_LB_NAME="gestalt-apis"
+AWS_GESTALT_KONG_DNS_NAME="gestalt-apis"
+
+
+# --------------------------------------------------------------------
+# Other settings
+# --------------------------------------------------------------------
+# GESTALT_INSTALL_MODE=debug  # set to 'debug' or any other value for non-debug
